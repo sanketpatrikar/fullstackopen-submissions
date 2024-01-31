@@ -1,0 +1,491 @@
+{
+    "data": [
+        {
+            "id": 1281,
+            "name": "Matthew Miller",
+            "email": "matthewm@example.com",
+            "password": "$2y$10$TIhHj2Rl2BjWHVlSdjMHT.BdZQXx45x5O2/I.4LHwYgdWjJ39vZEe",
+            "status": "1",
+            "created_at": "2024-01-15 11:49:34",
+            "updated_at": "2024-01-15 11:49:34",
+            "user_details": [
+                {
+                    "id": 586,
+                    "user_id": 1281,
+                    "obj_id": "a83d5497-20af-468b-94be-c4192b10828b",
+                    "tenant_id": 356,
+                    "role": "user",
+                    "phone": "5557778888",
+                    "timezone": "CST",
+                    "last_name": "Miller",
+                    "first_name": "Matthew",
+                    "facility_ids": [""],
+                    "user_type_id": 367,
+                    "contract_type_id": 370,
+                    "user_type": "Internal",
+                    "contract_type": "Permanent",
+                    "facility_name": null,
+                    "created_at": "2024-01-15 11:49:34",
+                    "updated_at": "2024-01-15 11:49:34",
+                    "facilities": []
+                }
+            ],
+            "attachments": []
+        },
+        {
+            "id": 1280,
+            "name": "Tom Harrison",
+            "email": "tomh@example.com",
+            "password": "$2y$10$5LZfJGWn/G3d/cBpuqxrh..n8axhUsN0k36yFg8O1n9tvlS0T8Cam",
+            "status": "1",
+            "created_at": "2024-01-15 11:49:33",
+            "updated_at": "2024-01-15 11:49:33",
+            "user_details": [
+                {
+                    "id": 585,
+                    "user_id": 1280,
+                    "obj_id": "bcfd367a-1ad8-4ba8-ab7d-9808b0e9ac2e",
+                    "tenant_id": 356,
+                    "role": "user",
+                    "phone": "1114448888",
+                    "timezone": "EST",
+                    "last_name": "Harrison",
+                    "first_name": "Tom",
+                    "facility_ids": [""],
+                    "user_type_id": 367,
+                    "contract_type_id": 370,
+                    "user_type": "Internal",
+                    "contract_type": "Permanent",
+                    "facility_name": null,
+                    "created_at": "2024-01-15 11:49:33",
+                    "updated_at": "2024-01-15 11:49:33",
+                    "facilities": []
+                }
+            ],
+            "attachments": []
+        },
+        {
+            "id": 1279,
+            "name": "Daniel Moore",
+            "email": "danielmoore@example.com",
+            "password": "$2y$10$0WCVZhRbtl1MZ/pPYtGceeea9AYOTq2ZRB8lJIgfMIc7zH//HSFm2",
+            "status": "1",
+            "created_at": "2024-01-15 11:49:32",
+            "updated_at": "2024-01-15 11:49:32",
+            "user_details": [
+                {
+                    "id": 584,
+                    "user_id": 1279,
+                    "obj_id": "e6b4dc54-6e97-415f-825b-b02e277d209e",
+                    "tenant_id": 356,
+                    "role": "user",
+                    "phone": "8883334444",
+                    "timezone": "PST",
+                    "last_name": "Moore",
+                    "first_name": "Daniel",
+                    "facility_ids": [""],
+                    "user_type_id": 367,
+                    "contract_type_id": 370,
+                    "user_type": "Internal",
+                    "contract_type": "Permanent",
+                    "facility_name": null,
+                    "created_at": "2024-01-15 11:49:32",
+                    "updated_at": "2024-01-15 11:49:32",
+                    "facilities": []
+                }
+            ],
+            "attachments": []
+        },
+        {
+            "id": 1278,
+            "name": "Emily Anderson",
+            "email": "emilya@example.com",
+            "password": "$2y$10$PKHOwpC0P3XuFCb8hgimGe1vt4DRCNtn30fWrt89siYjK1lwGwiAq",
+            "status": "1",
+            "created_at": "2024-01-15 11:49:31",
+            "updated_at": "2024-01-15 11:49:31",
+            "user_details": [
+                {
+                    "id": 583,
+                    "user_id": 1278,
+                    "obj_id": "67572ca5-15db-4f6e-8935-4ae43c33539c",
+                    "tenant_id": 356,
+                    "role": "user",
+                    "phone": "2227778888",
+                    "timezone": "EST",
+                    "last_name": "Anderson",
+                    "first_name": "Emily",
+                    "facility_ids": [""],
+                    "user_type_id": 367,
+                    "contract_type_id": 370,
+                    "user_type": "Internal",
+                    "contract_type": "Permanent",
+                    "facility_name": null,
+                    "created_at": "2024-01-15 11:49:31",
+                    "updated_at": "2024-01-15 11:49:31",
+                    "facilities": []
+                }
+            ],
+            "attachments": []
+        },
+        {
+            "id": 1277,
+            "name": "Alex Wilson",
+            "email": "alexwilson@example.com",
+            "password": "$2y$10$q4DiaPw7.H0vSeojbEjjg.y4C3mG5AJL7zYKLjeSSZ0VgO9hpR0fy",
+            "status": "1",
+            "created_at": "2024-01-15 11:49:31",
+            "updated_at": "2024-01-15 11:49:31",
+            "user_details": [
+                {
+                    "id": 582,
+                    "user_id": 1277,
+                    "obj_id": "e001c75c-2b2d-4903-9328-82f11613205c",
+                    "tenant_id": 356,
+                    "role": "user",
+                    "phone": "6669991111",
+                    "timezone": "UTC",
+                    "last_name": "Wilson",
+                    "first_name": "Alex",
+                    "facility_ids": [""],
+                    "user_type_id": 367,
+                    "contract_type_id": 370,
+                    "user_type": "Internal",
+                    "contract_type": "Permanent",
+                    "facility_name": null,
+                    "created_at": "2024-01-15 11:49:31",
+                    "updated_at": "2024-01-15 11:49:31",
+                    "facilities": []
+                }
+            ],
+            "attachments": []
+        },
+        {
+            "id": 1276,
+            "name": "Sara Clark",
+            "email": "saraclark@example.com",
+            "password": "$2y$10$iX.YfB4QYIpGV69L7I6wpuxpvH4YjbfF/dx2wPFFxJci40uapy0Ce",
+            "status": "1",
+            "created_at": "2024-01-15 11:49:31",
+            "updated_at": "2024-01-15 11:49:31",
+            "user_details": [
+                {
+                    "id": 581,
+                    "user_id": 1276,
+                    "obj_id": "0f6098cf-3ee8-465e-8093-2c4552c935ef",
+                    "tenant_id": 356,
+                    "role": "user",
+                    "phone": "4445556666",
+                    "timezone": "CST",
+                    "last_name": "Clark",
+                    "first_name": "Sara",
+                    "facility_ids": [""],
+                    "user_type_id": 367,
+                    "contract_type_id": 370,
+                    "user_type": "Internal",
+                    "contract_type": "Permanent",
+                    "facility_name": null,
+                    "created_at": "2024-01-15 11:49:31",
+                    "updated_at": "2024-01-15 11:49:31",
+                    "facilities": []
+                }
+            ],
+            "attachments": []
+        },
+        {
+            "id": 1275,
+            "name": "Michael Taylor",
+            "email": "michaeltaylor@example.com",
+            "password": "$2y$10$TS50yBV25IA79LV8f5CsfOAJQ7G.xVPr8znVRwazaJs4YZ40B6Ap6",
+            "status": "1",
+            "created_at": "2024-01-15 11:49:30",
+            "updated_at": "2024-01-15 11:49:30",
+            "user_details": [
+                {
+                    "id": 580,
+                    "user_id": 1275,
+                    "obj_id": "7965c3f4-4337-4c5e-bc9b-3187bfe749e2",
+                    "tenant_id": 356,
+                    "role": "user",
+                    "phone": "1112223333",
+                    "timezone": "EST",
+                    "last_name": "Taylor",
+                    "first_name": "Michael",
+                    "facility_ids": [""],
+                    "user_type_id": 367,
+                    "contract_type_id": 370,
+                    "user_type": "Internal",
+                    "contract_type": "Permanent",
+                    "facility_name": null,
+                    "created_at": "2024-01-15 11:49:30",
+                    "updated_at": "2024-01-15 11:49:30",
+                    "facilities": []
+                }
+            ],
+            "attachments": []
+        },
+        {
+            "id": 1274,
+            "name": "Lisa Brown",
+            "email": "lisabrown@example.com",
+            "password": "$2y$10$QroHSi7cUfla3q6uEIos9eja.32OuXexBIJBb2nwziKM7CzH8hqSS",
+            "status": "1",
+            "created_at": "2024-01-15 11:49:30",
+            "updated_at": "2024-01-15 11:49:30",
+            "user_details": [
+                {
+                    "id": 579,
+                    "user_id": 1274,
+                    "obj_id": "765736b6-5ac2-4f86-859b-124c55d19a53",
+                    "tenant_id": 356,
+                    "role": "user",
+                    "phone": "7774445555",
+                    "timezone": "PST",
+                    "last_name": "Brown",
+                    "first_name": "Lisa",
+                    "facility_ids": [""],
+                    "user_type_id": 367,
+                    "contract_type_id": 370,
+                    "user_type": "Internal",
+                    "contract_type": "Permanent",
+                    "facility_name": null,
+                    "created_at": "2024-01-15 11:49:30",
+                    "updated_at": "2024-01-15 11:49:30",
+                    "facilities": []
+                }
+            ],
+            "attachments": []
+        },
+        {
+            "id": 1273,
+            "name": "Chris Jones",
+            "email": "chrisj@example.com",
+            "password": "$2y$10$27U/ayaH4htdtUi9S4eoR.v807N3NbgI887RAuhz.q1iJnEVDLaq6",
+            "status": "1",
+            "created_at": "2024-01-15 11:49:29",
+            "updated_at": "2024-01-15 11:49:29",
+            "user_details": [
+                {
+                    "id": 578,
+                    "user_id": 1273,
+                    "obj_id": "c330814a-956f-48f1-b711-fba877006fb7",
+                    "tenant_id": 356,
+                    "role": "user",
+                    "phone": "9998887777",
+                    "timezone": "CST",
+                    "last_name": "Jones",
+                    "first_name": "Chris",
+                    "facility_ids": [""],
+                    "user_type_id": 367,
+                    "contract_type_id": 370,
+                    "user_type": "Internal",
+                    "contract_type": "Permanent",
+                    "facility_name": null,
+                    "created_at": "2024-01-15 11:49:29",
+                    "updated_at": "2024-01-15 11:49:29",
+                    "facilities": []
+                }
+            ],
+            "attachments": []
+        },
+        {
+            "id": 1272,
+            "name": "Eva Miller",
+            "email": "evam@example.com",
+            "password": "$2y$10$Z2Kgin9F7kH4N8bAnQRLnOicwP8d4NX0UPIhpMSsMwkvhvzY0FWwq",
+            "status": "1",
+            "created_at": "2024-01-15 11:49:29",
+            "updated_at": "2024-01-15 11:49:29",
+            "user_details": [
+                {
+                    "id": 577,
+                    "user_id": 1272,
+                    "obj_id": "d3000784-b646-4fcb-85c0-9c2cd803a432",
+                    "tenant_id": 356,
+                    "role": "user",
+                    "phone": "3335557777",
+                    "timezone": "EST",
+                    "last_name": "Miller",
+                    "first_name": "Eva",
+                    "facility_ids": [""],
+                    "user_type_id": 367,
+                    "contract_type_id": 370,
+                    "user_type": "Internal",
+                    "contract_type": "Permanent",
+                    "facility_name": null,
+                    "created_at": "2024-01-15 11:49:29",
+                    "updated_at": "2024-01-15 11:49:29",
+                    "facilities": []
+                }
+            ],
+            "attachments": []
+        },
+        {
+            "id": 1271,
+            "name": "Bob Johnson",
+            "email": "bobj@example.com",
+            "password": "$2y$10$lMA6H85tA2X7eFNNXu1BP.OhUdUR26xYPBHPzQEXhZM6zeV3qqepu",
+            "status": "1",
+            "created_at": "2024-01-15 11:49:28",
+            "updated_at": "2024-01-15 11:49:28",
+            "user_details": [
+                {
+                    "id": 576,
+                    "user_id": 1271,
+                    "obj_id": "80e56949-9b11-4877-9e4f-4d13476dbad9",
+                    "tenant_id": 356,
+                    "role": "user",
+                    "phone": "5551234567",
+                    "timezone": "PST",
+                    "last_name": "Johnson",
+                    "first_name": "Bob",
+                    "facility_ids": [""],
+                    "user_type_id": 367,
+                    "contract_type_id": 370,
+                    "user_type": "Internal",
+                    "contract_type": "Permanent",
+                    "facility_name": null,
+                    "created_at": "2024-01-15 11:49:28",
+                    "updated_at": "2024-01-15 11:49:28",
+                    "facilities": []
+                }
+            ],
+            "attachments": []
+        },
+        {
+            "id": 1252,
+            "name": "Mohhmad Shami",
+            "email": "shami@tcs.io",
+            "password": "$2y$10$gIgAfZ5AY/5zDNlkX6S6puWUAfaWdV2ITrU3XsE.0O9YL7cg6833a",
+            "status": "1",
+            "created_at": "2024-01-12 05:55:57",
+            "updated_at": "2024-01-12 05:55:57",
+            "user_details": [
+                {
+                    "id": 557,
+                    "user_id": 1252,
+                    "obj_id": "4b575cb3-a39e-4837-a4a2-ac2a5f7988c1",
+                    "tenant_id": 356,
+                    "role": "admin",
+                    "phone": "9561757009",
+                    "timezone": "india",
+                    "last_name": "Shami",
+                    "first_name": "Mohhmad",
+                    "facility_ids": [315],
+                    "user_type_id": 367,
+                    "contract_type_id": 370,
+                    "user_type": "Internal",
+                    "contract_type": "Permanent",
+                    "facility_name": null,
+                    "created_at": "2024-01-12 05:55:57",
+                    "updated_at": "2024-01-12 05:55:57",
+                    "facilities": ["Dubai"]
+                }
+            ],
+            "attachments": []
+        },
+        {
+            "id": 996,
+            "name": "new admin",
+            "email": "new@admin.com",
+            "password": "$2y$10$k3LACQdIDnKFZ95fhZOGDuv44Qrpz6FEHPD6MXQX5aj9ZyX4JgcOG",
+            "status": "1",
+            "created_at": "2023-12-19 09:38:51",
+            "updated_at": "2023-12-19 09:38:51",
+            "user_details": [
+                {
+                    "id": 300,
+                    "user_id": 996,
+                    "obj_id": "f4a58022-ee4f-4110-8411-6fd35136abab",
+                    "tenant_id": 356,
+                    "role": "admin",
+                    "phone": "0987654321",
+                    "last_name": "admin",
+                    "first_name": "new",
+                    "facility_ids": [315, 314],
+                    "user_type_id": 367,
+                    "contract_type_id": 370,
+                    "user_type": "Internal",
+                    "contract_type": "Permanent",
+                    "facility_name": null,
+                    "timezone": null,
+                    "created_at": "2023-12-19 09:38:51",
+                    "updated_at": "2023-12-19 09:38:51",
+                    "facilities": ["Mumbai", "Dubai"]
+                }
+            ],
+            "attachments": []
+        },
+        {
+            "id": 985,
+            "name": "Tcs Admin 2 Tata",
+            "email": "admin1@tcs.io",
+            "password": "$2y$10$F4Vxdd7JjvOu8ks.rdGlaeNcLbOraXHEe6jJRBNiEf96MZvkBYFru",
+            "status": "1",
+            "created_at": "2023-12-19 06:29:54",
+            "updated_at": "2023-12-19 06:29:54",
+            "user_details": [
+                {
+                    "id": 293,
+                    "user_id": 985,
+                    "obj_id": "cc2547a4-aaea-4c3c-bbdd-2b7a9729a781",
+                    "tenant_id": 356,
+                    "role": "Company_Admin",
+                    "phone": "1234567890",
+                    "last_name": "Tata",
+                    "first_name": "Tcs Admin 2",
+                    "facility_ids": [317, 316, 315, 314],
+                    "user_type_id": 367,
+                    "contract_type_id": 370,
+                    "user_type": "Internal",
+                    "contract_type": "Permanent",
+                    "facility_name": null,
+                    "timezone": null,
+                    "created_at": "2023-12-19 06:29:54",
+                    "updated_at": "2023-12-19 06:29:54",
+                    "facilities": ["Mumbai", "Dubai", "New York", "London"]
+                }
+            ],
+            "attachments": []
+        },
+        {
+            "id": 954,
+            "name": "Atish Gore",
+            "email": "atishgore89@yahoo.com",
+            "password": "$2y$10$E65H2pstnmEtPBZEmW8ixeve3O8xhBbIeLO7aW7DrxKmzqw47hYhi",
+            "status": "1",
+            "created_at": "2023-12-18 06:48:24",
+            "updated_at": "2023-12-18 06:48:24",
+            "user_details": [
+                {
+                    "id": 263,
+                    "user_id": 954,
+                    "obj_id": "69e7b521-9de4-4822-82e7-c669d5e94f22",
+                    "tenant_id": 356,
+                    "role": "Facility_Analyst",
+                    "phone": "9561756007",
+                    "last_name": "Gore",
+                    "first_name": "Atish",
+                    "facility_ids": [315, 314],
+                    "user_type_id": 367,
+                    "contract_type_id": 370,
+                    "user_type": "Internal",
+                    "contract_type": "Permanent",
+                    "facility_name": null,
+                    "timezone": null,
+                    "created_at": "2023-12-18 06:48:24",
+                    "updated_at": "2023-12-18 06:48:24",
+                    "facilities": ["Mumbai", "Dubai"]
+                }
+            ],
+            "attachments": []
+        }
+    ],
+    "meta": {
+        "current_page": 1,
+        "last_page": 2,
+        "path": "https://f1.cw3.biz/api/1/esg/cw/users",
+        "per_page": 15,
+        "total": 25
+    }
+}
