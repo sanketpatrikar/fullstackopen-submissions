@@ -2,40 +2,49 @@ import { useState } from "react";
 import { Phonebook } from "./components/Phonebook";
 import { Filter } from "./components/Filter";
 import { PersonForm } from "./components/PersonForm";
+import { useEffect } from "react";
+import axios from "axios";
 
 const App = () => {
-    const [persons, setPersons] = useState([
-        { name: "Arto Hellas", number: "39-44-5323523", id: 1 },
-        { name: "Ada Lovelace", number: "39-44-5323523", id: 2 },
-        { name: "Dan Abramov", number: "12-43-234345", id: 3 },
-        { name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
-    ]);
+    const [people, setPeople] = useState([]);
     const [newName, setNewName] = useState("");
     const [newNumber, setNewNumber] = useState("");
     const [filteredPeople, setFilteredPeople] = useState([]);
 
+    useEffect(() => {
+        axios
+            .get("http://localhost:5000/people")
+            .then((response) => {
+                setPeople(response.data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, []);
+
     const addPerson = (event) => {
         event.preventDefault();
+
         const newPerson = {
             name: newName,
             number: newNumber,
-            id: persons.length + 1,
+            id: people.length + 1,
         };
-        let personAlreadyExists = persons.some(
+
+        let personAlreadyExists = people.some(
             (person) => person.name === newPerson.name
         );
 
         if (personAlreadyExists) {
             alert(`${newPerson.name} already exists`);
         } else {
-            setPersons(persons.concat(newPerson));
+            setPeople(people.concat(newPerson));
             setNewName("");
             setNewNumber("");
-            setFilteredPeople(persons);
         }
     };
 
-    const handleNameChange = (event) => {
+    const handleNameChange = async (event) => {
         setNewName(event.target.value);
     };
 
@@ -46,10 +55,10 @@ const App = () => {
     const handleSearchChange = (event) => {
         const term = event.target.value;
         if (term === "") {
-            setFilteredPeople(persons);
+            setPeople(persons);
         } else {
-            setFilteredPeople(
-                persons.filter((person) => {
+            setPeople(
+                people.filter((person) => {
                     if (
                         person.name.toLowerCase().includes(term.toLowerCase())
                     ) {
@@ -72,7 +81,7 @@ const App = () => {
                 addPerson={addPerson}
             />
 
-            <Phonebook persons={filteredPeople} />
+            <Phonebook persons={people} />
         </div>
     );
 };
