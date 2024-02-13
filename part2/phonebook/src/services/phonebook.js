@@ -3,9 +3,15 @@ import axios from "axios";
 const baseUrl = "http://localhost:5000";
 
 const getAll = () => {
-    axios.get(baseUrl).then((response) => {
+    return axios.get(`${baseUrl}/people`).then((response) => {
         return response.data;
     });
 };
 
-export default { getAll };
+const add = (newPerson) => {
+    return axios.post(`${baseUrl}/people`, newPerson).then((response) => {
+        return response.data;
+    });
+};
+
+export default { getAll, add };

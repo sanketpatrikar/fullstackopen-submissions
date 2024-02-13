@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-
 import { Phonebook } from "./components/Phonebook";
 import { Filter } from "./components/Filter";
 import { PersonForm } from "./components/PersonForm";
+import phonebookService from "./services/phonebook";
 
 const App = () => {
     const [people, setPeople] = useState([]);
@@ -12,13 +11,11 @@ const App = () => {
     const [filteredPeople, setFilteredPeople] = useState(people);
     const [filterApplied, setFilter] = useState(false);
 
-    const baseUrl = "http://localhost:5000";
-
     useEffect(() => {
-        axios
-            .get(`${baseUrl}/people`)
-            .then((response) => {
-                setPeople(response.data);
+        phonebookService
+            .getAll()
+            .then((initialPhonebook) => {
+                setPeople(initialPhonebook);
             })
             .catch((error) => {
                 console.error(error);
@@ -40,9 +37,7 @@ const App = () => {
         if (personAlreadyExists) {
             alert(`${newPerson.name} already exists`);
         } else {
-            axios
-            .post(`${baseUrl}/people`, newPerson)
-            .then(({data: addedPerson}) => {
+            phonebookService.add(newPerson).then((addedPerson) => {
                 setPeople(people.concat(addedPerson));
             });
 
