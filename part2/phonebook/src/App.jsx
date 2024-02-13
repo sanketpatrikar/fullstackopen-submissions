@@ -31,7 +31,6 @@ const App = () => {
         const newPerson = {
             name: newName,
             number: newNumber,
-            id: people.length + 1,
         };
 
         let personAlreadyExists = people.some(
@@ -41,7 +40,12 @@ const App = () => {
         if (personAlreadyExists) {
             alert(`${newPerson.name} already exists`);
         } else {
-            setPeople(people.concat(newPerson));
+            axios
+            .post(`${baseUrl}/people`, newPerson)
+            .then(({data: addedPerson}) => {
+                setPeople(people.concat(addedPerson));
+            });
+
             setNewName("");
             setNewNumber("");
         }
