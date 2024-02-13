@@ -1,19 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
 import { Phonebook } from "./components/Phonebook";
 import { Filter } from "./components/Filter";
 import { PersonForm } from "./components/PersonForm";
-import { useEffect } from "react";
-import axios from "axios";
 
 const App = () => {
     const [people, setPeople] = useState([]);
     const [newName, setNewName] = useState("");
     const [newNumber, setNewNumber] = useState("");
-    const [filteredPeople, setFilteredPeople] = useState([]);
+    const [filteredPeople, setFilteredPeople] = useState(people);
+    const [filterApplied, setFilter] = useState(false);
+
+    const baseUrl = "http://localhost:5000";
 
     useEffect(() => {
         axios
-            .get("http://localhost:5000/people")
+            .get(`${baseUrl}/people`)
             .then((response) => {
                 setPeople(response.data);
             })
@@ -52,20 +55,32 @@ const App = () => {
         setNewNumber(event.target.value);
     };
 
+    const peopleProps = filterApplied ? filteredPeople : people;
+
     const handleSearchChange = (event) => {
-        const term = event.target.value;
-        if (term === "") {
-            setPeople(persons);
-        } else {
-            setPeople(
-                people.filter((person) => {
-                    if (
-                        person.name.toLowerCase().includes(term.toLowerCase())
-                    ) {
-                        return person;
-                    }
-                })
-            );
+        const searchedName = event.target.value;
+
+        switch (searchedName) {
+            case "":
+            case " ":
+            case undefined:
+            case null:
+                setFilter(false);
+                break;
+            default:
+                setFilteredPeople(
+                    people.filter((person) => {
+                        if (
+                            person.name
+                                .toLowerCase()
+                                .includes(searchedName.toLowerCase())
+                        ) {
+                            return person;
+                        }
+                    })
+                );
+                setFilter(true);
+                break;
         }
     };
 
@@ -81,7 +96,7 @@ const App = () => {
                 addPerson={addPerson}
             />
 
-            <Phonebook persons={people} />
+            <Phonebook persons={peopleProps} />
         </div>
     );
 };
