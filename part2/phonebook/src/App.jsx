@@ -34,21 +34,15 @@ const App = () => {
             (person) => person.name === newPerson.name
         );
 
-        console.log("person already exists", personAlreadyExists);
-
         if (personAlreadyExists) {
             const shouldReplaceUser = confirm(
                 `${newPerson.name} is already added to phonebook, replace the old number with a new one?`
             );
 
-            console.log("should replace", shouldReplaceUser);
-
             if (shouldReplaceUser) {
                 const personIndex = people.findIndex((person) => {
                     return person.name === newPerson.name;
                 });
-
-                console.log("person index is", personIndex);
 
                 phonebookService
                     .update(personIndex, newPerson)
