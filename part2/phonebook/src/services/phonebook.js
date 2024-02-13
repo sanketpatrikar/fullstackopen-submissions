@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const baseUrl = "http://localhost:5000";
+const db = "../../db.json";
 
 const getAll = () => {
     return axios.get(`${baseUrl}/people`).then((response) => {
@@ -14,10 +15,18 @@ const add = (newPerson) => {
     });
 };
 
+const update = (id, modifiedPerson) => {
+    return axios
+        .put(`${baseUrl}/people/${id}`, modifiedPerson)
+        .then((response) => {
+            return response.data;
+        });
+};
+
 const deletePerson = (id) => {
     return axios.delete(`${baseUrl}/people/${id}`).then((response) => {
         return response.data;
     });
 };
 
-export default { getAll, add, deletePerson };
+export default { getAll, add, update, deletePerson };

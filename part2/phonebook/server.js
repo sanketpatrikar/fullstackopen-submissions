@@ -50,6 +50,24 @@ app.post("/people", async (req, res) => {
     }
 });
 
+app.put("/people/:personID", async (req, res) => {
+    const personID = req.params.personID;
+    const modifiedPerson = req.body;
+
+    try {
+        const data = await fs.readFile(filePath, "utf-8");
+        const jsonData = await JSON.parse(data);
+
+        modifiedPerson.id = jsonData.length + 1;
+
+        jsonData.splice(personID, 1, modifiedPerson);
+
+        return res.send(jsonData);
+    } catch (error) {
+        console.error(error);
+    }
+});
+
 app.delete("/people/:personID", async (req, res) => {
     const personID = req.params.personID;
 
