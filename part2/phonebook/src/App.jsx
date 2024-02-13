@@ -46,6 +46,14 @@ const App = () => {
         }
     };
 
+    const deletePerson = (id) => {
+        if (confirm(`Delete ${people[id - 1].name}?`)) {
+            phonebookService
+                .deletePerson(id)
+                .then((modifiedNotes) => setPeople(modifiedNotes));
+        }
+    };
+
     const handleNameChange = async (event) => {
         setNewName(event.target.value);
     };
@@ -95,7 +103,7 @@ const App = () => {
                 addPerson={addPerson}
             />
 
-            <Phonebook persons={peopleProps} />
+            <Phonebook persons={peopleProps} deletePerson={deletePerson} />
         </div>
     );
 };

@@ -18,7 +18,18 @@ app.get("/people", async (req, res) => {
     }
 });
 
-app.use(express.json())
+app.get("/people/:personID", async (req, res) => {
+    const personID = req.params.personID;
+    try {
+        const data = await fs.readFile(filePath, "utf-8");
+        const jsonData = await JSON.parse(data);
+        return res.send(jsonData[personID - 1]);
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+app.use(express.json());
 
 app.post("/people", async (req, res) => {
     const receivedPerson = req.body;
@@ -36,6 +47,27 @@ app.post("/people", async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).send("Error reading the file or data");
+    }
+});
+
+app.delete("/people/:personID", async (req, res) => {
+    const personID = req.params.personID;
+
+    try {
+        const data = await fs.readFile(filePath, "utf-8");
+        const jsonData = await JSON.parse(data);
+
+        const indexOfPerson = jsonData.findIndex((person) => {
+            return person.id === parseInt(personID);
+        });
+
+        jsonData.splice(indexOfPerson, 1);
+
+        await fs.writeFile(filePath, JSON.stringify(jsonData));
+
+        return res.send(jsonData);
+    } catch (error) {
+        console.error(error);
     }
 });
 

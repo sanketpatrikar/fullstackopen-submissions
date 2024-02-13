@@ -1,13 +1,13 @@
 import { Person } from "./Person";
 
-export const Phonebook = ({ persons }) => {
+export const Phonebook = ({ persons, deletePerson }) => {
     return (
         <>
             <h2>Numbers</h2>
             <table>
                 <tbody>
                     {persons.map((person) => (
-                        <Person key={person.id} person={person} />
+                        <Person key={person.id} person={person} deletePerson={() => deletePerson(person.id)}/>
                     ))}
                 </tbody>
             </table>
