@@ -3,6 +3,7 @@ import { Phonebook } from "./components/Phonebook";
 import { Filter } from "./components/Filter";
 import { PersonForm } from "./components/PersonForm";
 import phonebookService from "./services/phonebook";
+import "./index.css";
 
 const App = () => {
     const [people, setPeople] = useState([]);
@@ -44,9 +45,10 @@ const App = () => {
                     return person.name === newPerson.name;
                 });
 
-                phonebookService
-                    .update(personIndex, newPerson)
-                    .then((updatedPeople) => setPeople(updatedPeople));
+                phonebookService;
+                update(personIndex, newPerson).then((updatedPeople) =>
+                    setPeople(updatedPeople)
+                );
             }
         } else {
             phonebookService.add(newPerson).then((addedPerson) => {

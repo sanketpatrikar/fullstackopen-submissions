@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const baseUrl = "http://localhost:5000";
-const db = "../../db.json";
 
 const getAll = () => {
     return axios.get(`${baseUrl}/people`).then((response) => {
