@@ -76,7 +76,7 @@ const App = () => {
 
     const deletePerson = (id) => {
         console.log("id is", id);
-        console.log("person", people[id - 1]);
+        console.log("person", people);
         if (confirm(`Delete ${people[id - 1].name}?`)) {
             phonebookService.deletePerson(id).then((modifiedNotes) => {
                 setPeople(modifiedNotes);

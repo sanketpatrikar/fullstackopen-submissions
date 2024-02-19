@@ -30,7 +30,7 @@ app.get("/people/:personID", async (req, res) => {
     const personID = req.params.personID;
     try {
         const data = await fs.readFile(filePath, "utf-8");
-        const jsonData = await JSON.parse(data);
+        let jsonData = await JSON.parse(data);
         return res.send(jsonData[personID - 1]);
     } catch (error) {
         console.error(error);
@@ -41,11 +41,15 @@ app.post("/people", async (req, res) => {
     const receivedPerson = req.body;
     try {
         const data = await fs.readFile(filePath, "utf-8");
-        const jsonData = await JSON.parse(data);
+        let jsonData = await JSON.parse(data);
 
         receivedPerson.id = jsonData.length + 1;
 
         jsonData.push(receivedPerson);
+
+        
+        jsonData = await fixIdOrder(jsonData);
+        console.log(jsonData);
 
         await fs.writeFile(filePath, JSON.stringify(jsonData));
 
@@ -62,11 +66,11 @@ app.put("/people/:personID", async (req, res) => {
 
     try {
         const data = await fs.readFile(filePath, "utf-8");
-        const jsonData = await JSON.parse(data);
-
-        modifiedPerson.id = jsonData.length + 1;
+        let jsonData = await JSON.parse(data);
 
         jsonData.splice(personID, 1, modifiedPerson);
+
+        jsonData = await fixIdOrder(jsonData);
 
         return res.send(jsonData);
     } catch (error) {
@@ -79,13 +83,16 @@ app.delete("/people/:personID", async (req, res) => {
 
     try {
         const data = await fs.readFile(filePath, "utf-8");
-        const jsonData = await JSON.parse(data);
+        let jsonData = await JSON.parse(data);
+        console.log(jsonData);
 
         const indexOfPerson = jsonData.findIndex((person) => {
             return person.id === parseInt(personID);
         });
 
         jsonData.splice(indexOfPerson, 1);
+
+        jsonData = await fixIdOrder(jsonData);
 
         await fs.writeFile(filePath, JSON.stringify(jsonData));
 
@@ -99,3 +106,11 @@ app.delete("/people/:personID", async (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}/people`);
 });
+
+const fixIdOrder = async (people) => {
+    await people.forEach((person, index) => {
+        people[index].id = index + 1;
+    });
+
+    return people;
+};
