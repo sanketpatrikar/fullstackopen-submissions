@@ -1,11 +1,19 @@
 // Import required modules
 import express from "express";
 import fs from "node:fs/promises";
+import cors from "cors";
 
 // Create an Express application
 const app = express();
 const port = 5000; // You can change this to any port you prefer
 const filePath = "./db.json";
+
+const corsOptions = {
+    origin: "http://localhost:5173",
+};
+
+app.use(express.json());
+app.use(cors(corsOptions));
 
 // Define a route that returns the JSON
 app.get("/people", async (req, res) => {
@@ -28,8 +36,6 @@ app.get("/people/:personID", async (req, res) => {
         console.error(error);
     }
 });
-
-app.use(express.json());
 
 app.post("/people", async (req, res) => {
     const receivedPerson = req.body;
