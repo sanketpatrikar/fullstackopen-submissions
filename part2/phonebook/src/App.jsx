@@ -16,6 +16,10 @@ const App = () => {
     const [messageType, setMessageType] = useState(null);
 
     useEffect(() => {
+        updateUsersOnClient();
+    }, []);
+
+    const updateUsersOnClient = async () => {
         phonebookService
             .getAll()
             .then((initialPhonebook) => {
@@ -24,7 +28,7 @@ const App = () => {
             .catch((error) => {
                 console.error(error);
             });
-    }, []);
+    };
 
     const addPerson = (event) => {
         event.preventDefault();
@@ -57,6 +61,11 @@ const App = () => {
                         setTimeout(function () {
                             setMessage(null);
                         }, 2000);
+                        updateUsersOnClient();
+                    })
+                    .catch((error) => {
+                        setMessageType(error);
+                        setMessage(`Error! Couldn't update`);
                     });
             }
         } else {
@@ -71,12 +80,11 @@ const App = () => {
             setTimeout(function () {
                 setMessage(null);
             }, 2000);
+            updateUsersOnClient();
         }
     };
 
     const deletePerson = (id) => {
-        console.log("id is", id);
-        console.log("person", people);
         if (confirm(`Delete ${people[id - 1].name}?`)) {
             phonebookService.deletePerson(id).then((modifiedNotes) => {
                 setPeople(modifiedNotes);
@@ -85,6 +93,7 @@ const App = () => {
                 setTimeout(function () {
                     setMessage(null);
                 }, 2000);
+                updateUsersOnClient();
             });
         }
     };
