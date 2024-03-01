@@ -54,21 +54,48 @@ const App = () => {
             };
 
             fetchCountry();
+        } else {
+            setDisplayedCountry(null);
         }
+    };
+
+    const handleCountrySelect = (countryName) => {
+        const fetchCountry = async () => {
+            const response = await fetch(`${baseUrl}/name/${countryName}`);
+            setDisplayedCountry(await response.json());
+        };
+
+        fetchCountry();
     };
 
     return (
         <div>
             find countries <input type="text" onChange={handleInputChange} />
-            {filteredCountries.length > 1 &&
-                filteredCountries.map((country) => <div>{country}</div>)}
-            {filteredCountries.length === 1 && displayedCountry && (
+            {!displayedCountry && filteredCountries.length > 10 && (
+                <div>Too many matches, specify another filter</div>
+            )}
+            {!displayedCountry &&
+                filteredCountries.length > 1 &&
+                filteredCountries.length < 10 &&
+                filteredCountries.map((country) => (
+                    <div>
+                        {country}{" "}
+                        <button onClick={() => handleCountrySelect(country)}>
+                            show
+                        </button>
+                    </div>
+                ))}
+            {displayedCountry && (
                 <div>
                     <h1>{displayedCountry.name.common}</h1>
                     <p>capital {displayedCountry.capital[0]}</p>
                     <p>area {displayedCountry.area}</p>
                     <ul>
-                        {Object.values(displayedCountry.languages).map(language => <li>{language}</li>)}
+                        {Object.values(displayedCountry.languages).map(
+                            (language) => (
+                                <li>{language}</li>
+                            )
+                        )}
                     </ul>
                     <img src={displayedCountry.flags.png} alt="" srcset="" />
                 </div>
