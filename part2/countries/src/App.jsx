@@ -90,6 +90,7 @@ const App = () => {
                     <h1>{displayedCountry.name.common}</h1>
                     <p>capital {displayedCountry.capital[0]}</p>
                     <p>area {displayedCountry.area}</p>
+                    <p>langauges</p>
                     <ul>
                         {Object.values(displayedCountry.languages).map(
                             (language) => (
