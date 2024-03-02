@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import CountriesList from "./components/CountriesList";
 import CountryDetails from "./components/CountryDetails";
 
@@ -34,15 +33,14 @@ const App = () => {
         let filteredCountries = [];
 
         setInputCountry(event.target.value);
-        const input = event.target.value;
 
-        if (input === "") {
+        if (inputCountry === "") {
             filteredCountries = [];
             setFilteredCountries(filteredCountries);
             return;
         }
         filteredCountries = countriesList.filter((country) =>
-            country.toLowerCase().startsWith(input)
+            country.toLowerCase().startsWith(inputCountry)
         );
 
         setFilteredCountries(filteredCountries);
