@@ -26,7 +26,7 @@ app.get("/api/people", async (req, res) => {
     }
 });
 
-app.get("/people/:personID", async (req, res) => {
+app.get("/api/people/:personID", async (req, res) => {
     const personID = req.params.personID;
     try {
         const data = await fs.readFile(filePath, "utf-8");
@@ -46,11 +46,23 @@ app.get("/info", async (req, res) => {
     );
 });
 
-app.post("/people", async (req, res) => {
+app.post("/api/people", async (req, res) => {
     const receivedPerson = req.body;
     try {
+        if (!receivedPerson.name || !receivedPerson.number) {
+            return res.json({ error: "name / number must be given" });
+        }
+
         const data = await fs.readFile(filePath, "utf-8");
         let jsonData = await JSON.parse(data);
+
+        const personAlreadyExists = jsonData.some(
+            (person) => person.name === receivedPerson.name
+        );
+
+        if (personAlreadyExists) {
+            return res.json({ error: "name must be unique" });
+        }
 
         receivedPerson.id = jsonData.length + 1;
 
@@ -67,7 +79,7 @@ app.post("/people", async (req, res) => {
     }
 });
 
-app.put("/people/:personID", async (req, res) => {
+app.put("/api/people/:personID", async (req, res) => {
     const personID = req.params.personID;
     const modifiedPerson = req.body;
 
@@ -89,7 +101,7 @@ app.put("/people/:personID", async (req, res) => {
     }
 });
 
-app.delete("/people/:personID", async (req, res) => {
+app.delete("/api/people/:personID", async (req, res) => {
     const personID = req.params.personID;
 
     try {
