@@ -6,7 +6,7 @@ import fs from "node:fs/promises";
 
 // Create an Express application
 const app = express();
-const port = process.env.port || 5000; // You can change this to any port you prefer
+const PORT = process.env.PORT || 5000; // You can change this to any port you prefer
 
 const filePath = "./db.json";
 
@@ -98,6 +98,6 @@ app.put("/api/notes/:noteID", async (req, res) => {
 });
 
 // Start the server
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}/api/notes`);
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}/api/notes`);
 });
