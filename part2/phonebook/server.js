@@ -1,25 +1,24 @@
 // Import required modules
 import express from "express";
 import fs from "node:fs/promises";
-import cors from "cors";
+import morgan from "morgan";
 
 // Create an Express application
 const app = express();
 const PORT = 5000; // You can change this to any port you prefer
 const filePath = "./db.json";
 
-const corsOptions = {
-    origin: `http://localhost:${PORT}`,
-};
-
 app.use(express.json());
-app.use(cors(corsOptions));
 
-const unknownEndpoint = (req, res) => {
-    res.status(404).send({ error: "unknown endpoint" });
-};
+morgan.token("body", (req) => {
+    return JSON.stringify(req.body);
+});
 
-app.use(unknownEndpoint)
+app.use(
+    morgan(
+        ":method :url :status :res[content-length] - :response-time ms :body"
+    )
+);
 
 // Define a route that returns the JSON
 app.get("/api/people", async (req, res) => {
@@ -130,9 +129,15 @@ app.delete("/api/people/:personID", async (req, res) => {
     }
 });
 
+const unknownEndpoint = (req, res) => {
+    res.status(404).send({ error: "unknown endpoint" });
+};
+
+app.use(unknownEndpoint);
+
 // Start the server
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}/people`);
+    console.log(`Server is running on http://localhost:${PORT}/api/people`);
 });
 
 const fixIdOrder = async (people) => {
