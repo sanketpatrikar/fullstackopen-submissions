@@ -10,15 +10,15 @@ const PORT = process.env.PORT || 5000; // You can change this to any port you pr
 
 const filePath = "./db.json";
 
-app.use(
-    helmet.contentSecurityPolicy({
-        directives: {
-            defaultSrc: ["'self'", "'unsafe-inline'"],
-        },
-    })
-);
+// app.use(
+//     helmet.contentSecurityPolicy({
+//         directives: {
+//             defaultSrc: ["'self'", "'unsafe-inline'"],
+//         },
+//     })
+// );
 
-app.use(cors({ credentials: true, origin: true }));
+app.use(cors());
 
 // Define a route that returns the JSON
 app.get("/api/notes", async (req, res) => {
@@ -99,5 +99,5 @@ app.put("/api/notes/:noteID", async (req, res) => {
 
 // Start the server
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}/api/notes`);
+    console.log(`Server is running on port ${PORT}`);
 });
