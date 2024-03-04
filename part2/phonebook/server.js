@@ -15,6 +15,12 @@ const corsOptions = {
 app.use(express.json());
 app.use(cors(corsOptions));
 
+const unknownEndpoint = (req, res) => {
+    res.status(404).send({ error: "unknown endpoint" });
+};
+
+app.use(unknownEndpoint)
+
 // Define a route that returns the JSON
 app.get("/api/people", async (req, res) => {
     try {
