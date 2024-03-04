@@ -19,6 +19,7 @@ const filePath = "./db.json";
 // );
 
 app.use(cors());
+app.use(express.static('dist'))
 
 // Define a route that returns the JSON
 app.get("/api/notes", async (req, res) => {
