@@ -1,12 +1,12 @@
 // Import required modules
 import express from "express";
 import helmet from "helmet";
-// const helmet = require('helmet');
+import cors from "cors";
 import fs from "node:fs/promises";
 
 // Create an Express application
 const app = express();
-const port = 5000; // You can change this to any port you prefer
+const port = process.env.port || 5000; // You can change this to any port you prefer
 
 const filePath = "./db.json";
 
@@ -18,8 +18,10 @@ app.use(
     })
 );
 
+app.use(cors({ credentials: true, origin: true }));
+
 // Define a route that returns the JSON
-app.get("/notes", async (req, res) => {
+app.get("/api/notes", async (req, res) => {
     try {
         const data = await fs.readFile(filePath, "utf-8");
         const jsonData = JSON.parse(data);
@@ -30,7 +32,7 @@ app.get("/notes", async (req, res) => {
     }
 });
 
-app.get("/notes/:noteID", async (req, res) => {
+app.get("/api/notes/:noteID", async (req, res) => {
     const noteID = req.params.noteID;
 
     if (isNaN(noteID)) {
@@ -54,7 +56,7 @@ app.get("/notes/:noteID", async (req, res) => {
 
 app.use(express.json());
 
-app.post("/notes", async (req, res) => {
+app.post("/api/notes", async (req, res) => {
     try {
         const receivedNote = req.body;
         const data = await fs.readFile(filePath, "utf-8");
@@ -71,7 +73,7 @@ app.post("/notes", async (req, res) => {
     }
 });
 
-app.put("/notes/:noteID", async (req, res) => {
+app.put("/api/notes/:noteID", async (req, res) => {
     const noteID = req.params.noteID;
 
     if (isNaN(noteID)) {
@@ -86,9 +88,8 @@ app.put("/notes/:noteID", async (req, res) => {
             jsonData[noteID - 1] = req.body;
             await fs.writeFile(filePath, JSON.stringify(jsonData));
             return res.status(200).send(jsonData[noteID - 1]);
-        }
-        else {
-            return res.status(404).send('Not Found!!!');
+        } else {
+            return res.status(404).send("Not Found!!!");
         }
     } catch (error) {
         console.error(error);
@@ -98,5 +99,5 @@ app.put("/notes/:noteID", async (req, res) => {
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}/notes`);
+    console.log(`Server is running on http://localhost:${port}/api/notes`);
 });
