@@ -5,18 +5,18 @@ import cors from "cors";
 
 // Create an Express application
 const app = express();
-const port = 5000; // You can change this to any port you prefer
+const PORT = 5000; // You can change this to any port you prefer
 const filePath = "./db.json";
 
 const corsOptions = {
-    origin: "http://localhost:5173",
+    origin: `http://localhost:${PORT}`,
 };
 
 app.use(express.json());
 app.use(cors(corsOptions));
 
 // Define a route that returns the JSON
-app.get("/people", async (req, res) => {
+app.get("/api/people", async (req, res) => {
     try {
         const data = await fs.readFile(filePath, "utf-8");
         res.json(JSON.parse(data));
@@ -37,6 +37,15 @@ app.get("/people/:personID", async (req, res) => {
     }
 });
 
+app.get("/info", async (req, res) => {
+    const data = await fs.readFile(filePath, "utf-8");
+    const notes = await JSON.parse(data);
+    res.send(
+        `<p>Phonebook has info for ${notes.length}</p>
+        <p>${new Date()}</p>`
+    );
+});
+
 app.post("/people", async (req, res) => {
     const receivedPerson = req.body;
     try {
@@ -47,9 +56,7 @@ app.post("/people", async (req, res) => {
 
         jsonData.push(receivedPerson);
 
-        
         jsonData = await fixIdOrder(jsonData);
-        console.log(jsonData);
 
         await fs.writeFile(filePath, JSON.stringify(jsonData));
 
@@ -68,6 +75,10 @@ app.put("/people/:personID", async (req, res) => {
         const data = await fs.readFile(filePath, "utf-8");
         let jsonData = await JSON.parse(data);
 
+        if (!jsonData[personID]) {
+            return;
+        }
+
         jsonData.splice(personID, 1, modifiedPerson);
 
         jsonData = await fixIdOrder(jsonData);
@@ -84,7 +95,6 @@ app.delete("/people/:personID", async (req, res) => {
     try {
         const data = await fs.readFile(filePath, "utf-8");
         let jsonData = await JSON.parse(data);
-        console.log(jsonData);
 
         const indexOfPerson = jsonData.findIndex((person) => {
             return person.id === parseInt(personID);
@@ -103,8 +113,8 @@ app.delete("/people/:personID", async (req, res) => {
 });
 
 // Start the server
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}/people`);
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}/people`);
 });
 
 const fixIdOrder = async (people) => {

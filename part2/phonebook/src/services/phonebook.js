@@ -22,7 +22,7 @@ const update = (id, modifiedPerson) => {
         });
 };
 
-const deletePerson = (id) => {
+const deletePerson = (name, id) => {
     return axios.delete(`${baseUrl}/people/${id}`).then((response) => {
         return response.data;
     });

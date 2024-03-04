@@ -84,17 +84,36 @@ const App = () => {
         }
     };
 
-    const deletePerson = (id) => {
+    const deletePerson = async (personToDelete) => {
+        await updateUsersOnClient();
+
+        const personExistsOnServer = people.some((person) => {
+            return person.name === personToDelete.name;
+        });
+
+        console.log("person exists on server", personExistsOnServer);
+
         if (confirm(`Delete ${people[id - 1].name}?`)) {
-            phonebookService.deletePerson(id).then((modifiedNotes) => {
-                setPeople(modifiedNotes);
-                setMessageType("success");
-                setMessage(`Deleted successfully.`);
-                setTimeout(function () {
-                    setMessage(null);
-                }, 2000);
-                updateUsersOnClient();
-            });
+            if (!personExistsOnServer) {
+                setMessageType("error");
+                setMessage("User No Longer Exists on the Server");
+                return;
+            }
+
+            try {
+                phonebookService
+                    .deletePerson(personToDelete.id)
+                    .then((modifiedNotes) => {
+                        setPeople(modifiedNotes);
+                        setMessageType("success");
+                        setMessage(`Deleted successfully.`);
+                        setTimeout(function () {
+                            setMessage(null);
+                        }, 2000);
+                    });
+            } catch (error) {
+                console.error(error);
+            }
         }
     };
 
