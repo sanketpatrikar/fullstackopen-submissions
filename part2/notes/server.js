@@ -1,6 +1,5 @@
 // Import required modules
 import express from "express";
-import helmet from "helmet";
 import cors from "cors";
 import fs from "node:fs/promises";
 
@@ -9,14 +8,6 @@ const app = express();
 const PORT = process.env.PORT || 5000; // You can change this to any port you prefer
 
 const filePath = "./db.json";
-
-// app.use(
-//     helmet.contentSecurityPolicy({
-//         directives: {
-//             defaultSrc: ["'self'", "'unsafe-inline'"],
-//         },
-//     })
-// );
 
 app.use(cors());
 app.use(express.static('dist'))
