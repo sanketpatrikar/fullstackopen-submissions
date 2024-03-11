@@ -10,7 +10,6 @@ const PORT = process.env.PORT || 5000; // You can change this to any port you pr
 const filePath = "./db.json";
 
 app.use(cors());
-app.use(express.static('dist'))
 
 // Define a route that returns the JSON
 app.get("/api/notes", async (req, res) => {
@@ -88,6 +87,8 @@ app.put("/api/notes/:noteID", async (req, res) => {
         return res.status(500).send("Internal server error.");
     }
 });
+
+app.use(express.static('dist'))
 
 // Start the server
 app.listen(PORT, () => {
