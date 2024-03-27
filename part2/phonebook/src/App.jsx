@@ -8,6 +8,7 @@ import Notification from "./components/Notification";
 
 const App = () => {
     const [people, setPeople] = useState([]);
+	// console.log(people);
     const [newName, setNewName] = useState("");
     const [newNumber, setNewNumber] = useState("");
     const [filteredPeople, setFilteredPeople] = useState(people);
@@ -23,6 +24,7 @@ const App = () => {
         phonebookService
             .getAll()
             .then((initialPhonebook) => {
+				console.log(initialPhonebook);
                 setPeople(initialPhonebook);
             })
             .catch((error) => {
@@ -167,7 +169,7 @@ const App = () => {
                 addPerson={addPerson}
             />
 
-            <Phonebook persons={peopleProps} deletePerson={deletePerson} />
+            <Phonebook persons={people} deletePerson={deletePerson} />
         </div>
     );
 };
