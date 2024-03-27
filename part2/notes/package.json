@@ -22,6 +22,7 @@
         "react-dom": "^18.2.0"
     },
     "devDependencies": {
+        "@dotenvx/dotenvx": "^0.27.0",
         "@types/react": "^18.2.61",
         "@types/react-dom": "^18.2.19",
         "@vitejs/plugin-react": "^4.2.1",
