@@ -21,7 +21,7 @@ app.get("/api/notes", async (req, res) => {
 		res.json(notes.rows);
 	} catch (error) {
 		console.error(error);
-		res.status(500).send("Error reading or parsing the file");
+		res.status(500).send("Internal Server Error");
 	}
 });
 
@@ -34,10 +34,14 @@ app.get("/api/notes/:noteID", async (req, res) => {
 
 	try {
 		const note = await getNoteById(noteID);
-		res.json(note.rows);
+		if (note.rows[0]) {
+			res.json(note.rows[0]);
+		} else {
+			res.sendStatus(404).end();
+		}
 	} catch (error) {
 		console.error(error);
-		res.status(500).send("Error reading or parsing the file");
+		res.status(500).send("Internal Server Error");
 	}
 });
 
@@ -58,7 +62,7 @@ app.put("/api/notes/:noteID", async (req, res) => {
 	const noteID = parseInt(req.params.noteID);
 
 	if (isNaN(noteID)) {
-		return res.status(500).send("Invalid note ID. Must be a number.");
+		return res.status(400).send("Invalid note ID. Must be a number.");
 	}
 
 	try {

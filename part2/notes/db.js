@@ -21,7 +21,7 @@ export async function getAllNotes() {
 }
 
 export async function getNoteById(id) {
-	return await query(`select * from notes where id = ${id}`);
+	return (await query(`select * from notes where id = ${id}`));
 }
 
 export async function addNote(note) {
