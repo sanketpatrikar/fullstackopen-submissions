@@ -31,10 +31,11 @@ export async function addNote(note) {
 	);
 }
 
-export async function toggleNoteImportanceById(id) {
+export async function updateNote(note) {
 	try {
 		await query(
-			`UPDATE NOTES SET important = NOT important WHERE id = ${id}`
+			`UPDATE NOTES SET content = $1, important = $2 where id = $3 returning *`,
+			[note.content, note.important, note.id]
 		);
 		return true;
 	} catch (error) {

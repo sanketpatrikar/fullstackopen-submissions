@@ -7,7 +7,7 @@ import {
 	deleteNote,
 	getAllNotes,
 	getNoteById,
-	toggleNoteImportanceById,
+	updateNote,
 } from "./db.js";
 
 // Create an Express application
@@ -20,13 +20,12 @@ app.use(cors());
 app.use(morgan("dev"));
 
 // Define a route that returns the JSON
-app.get("/api/notes", async (req, res) => {
+app.get("/api/notes", async (req, res, next) => {
 	try {
 		const notes = await getAllNotes();
 		res.json(notes.rows);
 	} catch (error) {
-		console.error(error);
-		res.status(500).send("Internal Server Error");
+		next(error);
 	}
 });
 
@@ -49,41 +48,38 @@ app.get("/api/notes/:noteID", async (req, res, next) => {
 	}
 });
 
-app.post("/api/notes", async (req, res) => {
+app.post("/api/notes", async (req, res, next) => {
 	try {
 		const note = req.body;
 		const addedNote = (await addNote(note)).rows[0];
 		res.status(201).send(addedNote);
 	} catch (error) {
-		console.error(error);
-		res.status(500).send("Internal server error");
+		next(error);
 	}
 });
 
-// TODO: Implement central error handling
-
-app.put("/api/notes/:noteID", async (req, res) => {
-	// Todo: make it possible to also edit `content`
+app.put("/api/notes/:noteID", async (req, res, next) => {
 	const noteID = parseInt(req.params.noteID);
 
 	if (isNaN(noteID)) {
 		return res.status(400).send("Malformed note ID. Must be a number.");
 	}
 
+	const updatedNote = req.body;
+
 	try {
-		const toggled = await toggleNoteImportanceById(noteID);
-		if (toggled) {
+		const updated = await updateNote(updatedNote);
+		if (updated) {
 			return res.sendStatus(200);
 		} else {
 			return res.status(401).send("Couldn't toggle importance");
 		}
 	} catch (error) {
-		console.error(error);
-		return res.status(500).send("Internal Server Error");
+		next(error);
 	}
 });
 
-app.delete("/api/notes/:noteID", async (req, res) => {
+app.delete("/api/notes/:noteID", async (req, res, next) => {
 	const noteID = req.params.noteID;
 
 	if (isNaN(noteID)) {
@@ -99,8 +95,7 @@ app.delete("/api/notes/:noteID", async (req, res) => {
 			return res.sendStatus(204).end();
 		}
 	} catch (error) {
-		console.log(error);
-		return res.status(500).send("Internal Server Error");
+		next(error);
 	}
 });
 
@@ -108,14 +103,14 @@ app.use((req, res) => {
 	res.status(404).send("Unknown Endpoint");
 });
 
-const errorHandler = (error, request, response, next) => {
-	console.error(error.message);
+const errorHandler = (error, req, res, next) => {
+	console.error(error.stack);
 
 	if (error.name === "CastError") {
-		return response.status(400).send({ error: "malformatted id" });
+		return res.status(400).json({ error: "Malformed ID EEEEEEEEEEE" });
+	} else {
+		next(error);
 	}
-
-	next(error);
 };
 
 // this has to be the last loaded middleware, also all the routes should be registered before this!
