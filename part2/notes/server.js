@@ -1,8 +1,10 @@
 // Import required modules
 import express from "express";
 import cors from "cors";
+import morgan from "morgan";
 import {
 	addNote,
+	deleteNote,
 	getAllNotes,
 	getNoteById,
 	toggleNoteImportanceById,
@@ -12,7 +14,10 @@ import {
 const app = express();
 const PORT = process.env.PORT || 5000; // You can change this to any port you prefer
 
+app.use(express.static("dist"));
+app.use(express.json());
 app.use(cors());
+app.use(morgan("dev"));
 
 // Define a route that returns the JSON
 app.get("/api/notes", async (req, res) => {
@@ -25,11 +30,11 @@ app.get("/api/notes", async (req, res) => {
 	}
 });
 
-app.get("/api/notes/:noteID", async (req, res) => {
+app.get("/api/notes/:noteID", async (req, res, next) => {
 	const noteID = req.params.noteID;
 
 	if (isNaN(noteID)) {
-		return res.status(500).send("Invalid note ID. Must be a number.");
+		return res.status(400).send("malformed ID. must be a number");
 	}
 
 	try {
@@ -40,12 +45,9 @@ app.get("/api/notes/:noteID", async (req, res) => {
 			res.sendStatus(404).end();
 		}
 	} catch (error) {
-		console.error(error);
-		res.status(500).send("Internal Server Error");
+		next(error);
 	}
 });
-
-app.use(express.json());
 
 app.post("/api/notes", async (req, res) => {
 	try {
@@ -58,11 +60,14 @@ app.post("/api/notes", async (req, res) => {
 	}
 });
 
+// TODO: Implement central error handling
+
 app.put("/api/notes/:noteID", async (req, res) => {
+	// Todo: make it possible to also edit `content`
 	const noteID = parseInt(req.params.noteID);
 
 	if (isNaN(noteID)) {
-		return res.status(400).send("Invalid note ID. Must be a number.");
+		return res.status(400).send("Malformed note ID. Must be a number.");
 	}
 
 	try {
@@ -74,11 +79,47 @@ app.put("/api/notes/:noteID", async (req, res) => {
 		}
 	} catch (error) {
 		console.error(error);
-		return res.status(500).send("Internal server error.");
+		return res.status(500).send("Internal Server Error");
 	}
 });
 
-app.use(express.static("dist"));
+app.delete("/api/notes/:noteID", async (req, res) => {
+	const noteID = req.params.noteID;
+
+	if (isNaN(noteID)) {
+		return res.status(400).send("Malformed note ID. Must be a number.");
+	}
+
+	try {
+		const deleted = await deleteNote(noteID);
+
+		if (deleted) {
+			return res.sendStatus(204);
+		} else {
+			return res.sendStatus(204).end();
+		}
+	} catch (error) {
+		console.log(error);
+		return res.status(500).send("Internal Server Error");
+	}
+});
+
+app.use((req, res) => {
+	res.status(404).send("Unknown Endpoint");
+});
+
+const errorHandler = (error, request, response, next) => {
+	console.error(error.message);
+
+	if (error.name === "CastError") {
+		return response.status(400).send({ error: "malformatted id" });
+	}
+
+	next(error);
+};
+
+// this has to be the last loaded middleware, also all the routes should be registered before this!
+app.use(errorHandler);
 
 // Start the server
 app.listen(PORT, () => {

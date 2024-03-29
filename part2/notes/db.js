@@ -21,7 +21,7 @@ export async function getAllNotes() {
 }
 
 export async function getNoteById(id) {
-	return (await query(`select * from notes where id = ${id}`));
+	return await query(`select * from notes where id = ${id}`);
 }
 
 export async function addNote(note) {
@@ -36,6 +36,16 @@ export async function toggleNoteImportanceById(id) {
 		await query(
 			`UPDATE NOTES SET important = NOT important WHERE id = ${id}`
 		);
+		return true;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+
+export async function deleteNote(id) {
+	try {
+		await query(`DELETE from notes where id = ${id}`);
 		return true;
 	} catch (error) {
 		console.log(error);
