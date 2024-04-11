@@ -7,7 +7,7 @@ export const Phonebook = ({ persons, deletePerson }) => {
             <table>
                 <tbody>
                     {persons.map((person) => (
-                        <Person key={person.id} person={person} deletePerson={() => deletePerson(person)}/>
+                        <Person key={person.id} person={person} deletePerson={deletePerson}/>
                     ))}
                 </tbody>
             </table>

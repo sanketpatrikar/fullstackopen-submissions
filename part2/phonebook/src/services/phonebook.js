@@ -4,7 +4,6 @@ const baseUrl = "http://localhost:5000/api/people";
 
 const getAll = () => {
 	return axios.get(`${baseUrl}`).then((response) => {
-		console.log(response);
 		return response.data;
 	});
 };
@@ -21,8 +20,8 @@ const update = (id, modifiedPerson) => {
 	});
 };
 
-const deletePerson = (name, id) => {
-	return axios.delete(`${baseUrl}/${id}`).then((response) => {
+const deletePerson = async (id) => {
+	return await axios.delete(`${baseUrl}/${id}`).then((response) => {
 		return response.data;
 	});
 };
