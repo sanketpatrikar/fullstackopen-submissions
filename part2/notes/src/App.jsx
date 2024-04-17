@@ -57,7 +57,13 @@ const App = () => {
 				setNotes(notes.concat(returnedNote));
 				setNewNote("");
 			})
-			.catch((error) => console.error(error));
+			.catch((error) => {
+				console.error(error);
+				setErrorMessage("Message content too short");
+				setTimeout(function () {
+					setErrorMessage(null);
+				}, 2000);
+			});
 	};
 
 	const handleNoteChange = (event) => {

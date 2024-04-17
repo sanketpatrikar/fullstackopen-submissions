@@ -1,19 +1,24 @@
 import pkg from "pg";
 const { Pool } = pkg;
 
+// const { createClient } = require('@supabase/supabase-js');
+import { createClient } from "@supabase/supabase-js";
+
+
+
 import dotenvx from "@dotenvx/dotenvx";
 dotenvx.config();
 
-const pool = new Pool({
-	user: "postgres",
-	password: process.env.DB_PASS,
-	host: "localhost",
-	database: "notes_db",
-	port: 5432,
-});
+const supabaseUrl = 'https://elifcfxzhfuqhyuoynjm.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVsaWZjZnh6aGZ1cWh5dW95bmptIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI5MTg2NDUsImV4cCI6MjAyODQ5NDY0NX0.j9cS36JsMLRxjthTpmD5VwSUzNs9YPUe1bMUbIfEprY';
+const supabaseUser = 'postgres.elifcfxzhfuqhyuoynjm';
+const supabasePassword = 'u8qCw$Kt%yFSa2vY4b*g3';
+const supabaseDatabase = 'postgres';
+
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 export function query(text, params) {
-	return pool.query(text, params);
+	return supabase.query(text, params);
 }
 
 export async function getAllNotes() {
