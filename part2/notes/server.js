@@ -51,7 +51,11 @@ app.get("/api/notes/:noteID", async (req, res, next) => {
 app.post("/api/notes", async (req, res, next) => {
 	try {
 		const note = req.body;
+		if (!note.content) {
+			return res.status(404).json({ error: "content missing" });
+		}
 		const addedNote = (await addNote(note)).rows[0];
+		console.log(addedNote);
 		res.status(201).send(addedNote);
 	} catch (error) {
 		next(error);
@@ -90,7 +94,7 @@ app.delete("/api/notes/:noteID", async (req, res, next) => {
 		const deleted = await deleteNote(noteID);
 
 		if (deleted) {
-			return res.sendStatus(204);
+			return res.sendStatus(204).end();
 		} else {
 			return res.sendStatus(204).end();
 		}
@@ -104,13 +108,19 @@ app.use((req, res) => {
 });
 
 const errorHandler = (error, req, res, next) => {
-	console.error(error.stack);
+	console.error(error);
 
-	if (error.name === "CastError") {
-		return res.status(400).json({ error: "Malformed ID EEEEEEEEEEE" });
-	} else {
-		next(error);
+	switch (error) {
+		case error.name === "CastError":
+		case error.name === "ValidationError":
+			return res.status(400).json({ error: "Malformed ID" });
+		case error.routine === "ExecConstraints":
+			return res.status(400).json({ error: error.message });
+		default:
+			break;
 	}
+
+	next(error);
 };
 
 // this has to be the last loaded middleware, also all the routes should be registered before this!
