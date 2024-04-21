@@ -11,26 +11,30 @@ const App = () => {
 	const [showAll, setShowAll] = useState(true);
 	const [errorMessage, setErrorMessage] = useState(null);
 
-	const hook = () => {
+	useEffect(() => {
 		noteService.getAll().then((initialNotes) => {
 			setNotes(initialNotes);
 		});
-	};
+	}, []);
 
 	const toggleImportanceOf = async (id) => {
-		const note = notes.find((note) => note.id === id);
-		const toggled = await noteService.toggleImportance(id);
-		if (toggled === 200) {
-			setNotes(
-				notes.map((note) => {
-					return note.id !== id
-						? note
-						: { ...note, important: !note.important };
-				})
-			);
-		} else if (toggled === 401) {
+
+		const updatedNote = await notes.find((note) => note.id === id);
+		updatedNote.important = !updatedNote.important;
+
+		const toggled = await noteService.toggleImportance(updatedNote);
+		if (toggled) {
+			console.log("we're here");
+			const newNotes = notes.map((note) => {
+				return note.id === id
+					? { ...note, important: !note.important }
+					: note;
+			});
+
+			setNotes(newNotes);
+		} else if (!toggled) {
 			setErrorMessage(
-				`Note '${note.content}' was already removed from server`
+				`Note '${updatedNote.content}' was already removed from server`
 			);
 			setTimeout(() => {
 				setErrorMessage(null);
@@ -39,7 +43,6 @@ const App = () => {
 		}
 	};
 
-	useEffect(hook, []);
 	const notesToShow = showAll
 		? notes
 		: notes.filter((note) => note.important === true);
@@ -67,7 +70,6 @@ const App = () => {
 	};
 
 	const handleNoteChange = (event) => {
-		console.log(event.target.value);
 		setNewNote(event.target.value);
 	};
 

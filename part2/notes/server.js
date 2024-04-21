@@ -19,11 +19,10 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
 
-// Define a route that returns the JSON
 app.get("/api/notes", async (req, res, next) => {
 	try {
 		const notes = await getAllNotes();
-		res.json(notes.rows);
+		res.json(notes.data);
 	} catch (error) {
 		next(error);
 	}
@@ -38,8 +37,8 @@ app.get("/api/notes/:noteID", async (req, res, next) => {
 
 	try {
 		const note = await getNoteById(noteID);
-		if (note.rows[0]) {
-			res.json(note.rows[0]);
+		if (note.data) {
+			res.json(note.data);
 		} else {
 			res.sendStatus(404).end();
 		}
@@ -54,8 +53,15 @@ app.post("/api/notes", async (req, res, next) => {
 		if (!note.content) {
 			return res.status(404).json({ error: "content missing" });
 		}
-		const addedNote = (await addNote(note)).rows[0];
-		console.log(addedNote);
+
+		const db_response = await addNote(note);
+
+		if (db_response.error) {
+			throw new Error(db_response.error);
+		}
+
+		const addedNote = db_response.data[0];
+
 		res.status(201).send(addedNote);
 	} catch (error) {
 		next(error);
@@ -63,21 +69,24 @@ app.post("/api/notes", async (req, res, next) => {
 });
 
 app.put("/api/notes/:noteID", async (req, res, next) => {
-	const noteID = parseInt(req.params.noteID);
-
-	if (isNaN(noteID)) {
-		return res.status(400).send("Malformed note ID. Must be a number.");
-	}
-
-	const updatedNote = req.body;
-
 	try {
-		const updated = await updateNote(updatedNote);
-		if (updated) {
-			return res.sendStatus(200);
-		} else {
-			return res.status(401).send("Couldn't toggle importance");
+		const noteID = parseInt(req.params.noteID);
+
+		if (isNaN(noteID)) {
+			return res.status(400).send("Malformed note ID. Must be a number.");
 		}
+
+		const note = req.body;
+
+		const db_response = await updateNote(note);
+
+		if (db_response.error) {
+			throw new Error(db_response.error);
+		}
+
+		const updatedNote = db_response.data[0];
+
+		res.status(200).send(updatedNote);
 	} catch (error) {
 		next(error);
 	}
