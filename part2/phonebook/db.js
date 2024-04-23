@@ -1,9 +1,4 @@
-import pkg from "pg";
-const { Pool } = pkg;
-
 import { createClient } from "@supabase/supabase-js";
-import dotenvx from "@dotenvx/dotenvx";
-dotenvx.config();
 
 const supabaseUrl = "https://elifcfxzhfuqhyuoynjm.supabase.co";
 const supabaseKey =
