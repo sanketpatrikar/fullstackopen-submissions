@@ -11,10 +11,6 @@ const supabaseKey =
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-export function query(text, params) {
-	return supabase.query(text, params);
-}
-
 export async function getAllNotes() {
 	return await supabase.rpc("get_all_notes");
 }
