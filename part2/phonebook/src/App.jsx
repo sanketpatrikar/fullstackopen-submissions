@@ -2,10 +2,9 @@ import { useState, useEffect } from "react";
 import { Phonebook } from "./components/Phonebook";
 import { Filter } from "./components/Filter";
 import { PersonForm } from "./components/PersonForm";
+import Notification from "./components/Notification";
 import phonebookService from "./services/phonebook";
 import "./index.css";
-import Notification from "./components/Notification";
-
 
 const App = () => {
 	const [people, setPeople] = useState([]);
@@ -28,6 +27,11 @@ const App = () => {
 			})
 			.catch((error) => {
 				console.error(error);
+				setMessageType("error");
+				setMessage(`Couldn't get users: ${error}`);
+				setTimeout(function () {
+					setMessage(null);
+				}, 2000);
 			});
 	};
 
@@ -38,6 +42,15 @@ const App = () => {
 			name: newName,
 			number: newNumber,
 		};
+
+		if (!newPerson.name || !newPerson.number) {
+			setMessageType("error");
+			setMessage(`Cannot add person without name / number`);
+			setTimeout(function () {
+				setMessage(null);
+			}, 2000);
+			return;
+		}
 
 		let personAlreadyExists = people.some(
 			(person) => person.name === newPerson.name
@@ -65,8 +78,11 @@ const App = () => {
 						updateUsersOnClient();
 					})
 					.catch((error) => {
-						setMessageType(error);
-						setMessage(`Error! Couldn't update`);
+						setMessageType("error");
+						setMessage(`Couldn't update contact: ${error}`);
+						setTimeout(function () {
+							setMessage(null);
+						}, 2000);
 					});
 			}
 		} else {
@@ -86,44 +102,18 @@ const App = () => {
 	};
 
 	const deletePerson = async (personID) => {
-		// await updateUsersOnClient();
-
 		try {
 			await phonebookService.deletePerson(personID);
 			setPeople(people.filter((person) => person.id !== personID));
 		} catch (error) {
 			console.log(error);
+			setMessageType("error");
+			setMessage(`Person couldn't be deleted: ${error}`);
+			setTimeout(function () {
+				setMessage(null);
+			}, 2000);
 		}
-
-		// const personExistsOnServer = people.some((person) => {
-		//     return person.name === personToDelete.name;
-		// });
-
-		// console.log("person exists on server", personExistsOnServer);
-
-		// if (confirm(`Delete ${people[personToDelete.id - 1].name}?`)) {
-		//     if (!personExistsOnServer) {
-		//         setMessageType("error");
-		//         setMessage("User No Longer Exists on the Server");
-		//         return;
-		//     }
-
-		//     try {
-		//         phonebookService
-		//             .deletePerson(personToDelete.id)
-		//             .then((modifiedNotes) => {
-		//                 setPeople(modifiedNotes);
-		//                 setMessageType("success");
-		//                 setMessage(`Deleted successfully.`);
-		//                 setTimeout(function () {
-		//                     setMessage(null);
-		//                 }, 2000);
-		//             });
-		//     } catch (error) {
-		//         console.error(error);
-		//     }
 	};
-	// };
 
 	const handleNameChange = async (event) => {
 		setNewName(event.target.value);
@@ -132,8 +122,6 @@ const App = () => {
 	const handleNumberChange = (event) => {
 		setNewNumber(event.target.value);
 	};
-
-	const peopleProps = filterApplied ? filteredPeople : people;
 
 	const handleSearchChange = (event) => {
 		const searchedName = event.target.value;
@@ -175,7 +163,10 @@ const App = () => {
 				addPerson={addPerson}
 			/>
 
-			<Phonebook persons={people} deletePerson={deletePerson} />
+			<Phonebook
+				persons={filterApplied ? filteredPeople : people}
+				deletePerson={deletePerson}
+			/>
 		</div>
 	);
 };

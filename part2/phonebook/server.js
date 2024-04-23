@@ -1,6 +1,5 @@
 // Import required modules
 import express from "express";
-import fs from "node:fs/promises";
 import morgan from "morgan";
 import {
 	addContact,
@@ -31,8 +30,8 @@ app.use(
 // Define a route that returns the JSON
 app.get("/api/people", async (req, res, next) => {
 	try {
-		const data = await getPhonebook();
-		res.json(data.rows);
+		const phonebook = await getPhonebook();
+		res.json(phonebook.data);
 	} catch (error) {
 		next(error);
 	}
@@ -42,20 +41,20 @@ app.post("/api/people", async (req, res, next) => {
 	const receivedPerson = req.body;
 	try {
 		if (!receivedPerson.name || !receivedPerson.number) {
-			return res.json({ error: "name / number must be given" });
+			return res.sendStatus(400);
 		}
 
-		const addedPerson = (await addContact(receivedPerson)).rows[0];
-		res.status(201).send(addedPerson);
+		const addedPerson = (await addContact(receivedPerson)).data[0];
+		res.status(201).json(addedPerson);
 	} catch (error) {
 		next(error);
 	}
 });
 
 app.get("/api/people/:personID", async (req, res, next) => {
-	const personID = req.params.personID;
+	const personID = parseInt(req.params.personID);
 	try {
-		const personData = (await getContact(personID)).rows[0];
+		const personData = (await getContact(personID)).data[0];
 
 		if (personData) {
 			res.send(personData);
@@ -71,7 +70,7 @@ app.put("/api/people/:personID", async (req, res, next) => {
 	const modifiedPerson = req.body;
 
 	try {
-		const editedContact = (await editContact(modifiedPerson)).rows[0];
+		const editedContact = (await editContact(modifiedPerson)).data[0];
 
 		if (editedContact) {
 			res.send(editedContact);
@@ -95,10 +94,12 @@ app.delete("/api/people/:personID", async (req, res, next) => {
 });
 
 app.get("/info", async (req, res, next) => {
-	const entryCount = (await getEntriesCount()).rows[0].count;
+	const entryCount = (await getEntriesCount()).data;
 	try {
-		res.send(`<p>Phonebook has info for ${entryCount} people</p>
-		<p>${new Date()}</p>`);
+		res.send(
+			`<p>Phonebook has info for ${entryCount} people</p>
+			 <p>${new Date()}</p>`
+	);
 	} catch (error) {
 		next(error);
 	}

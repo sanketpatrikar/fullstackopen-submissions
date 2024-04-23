@@ -1,49 +1,38 @@
 import pkg from "pg";
 const { Pool } = pkg;
 
+import { createClient } from "@supabase/supabase-js";
 import dotenvx from "@dotenvx/dotenvx";
 dotenvx.config();
 
-const db = new Pool({
-	user: "postgres",
-	password: "postgres",
-	host: "localhost",
-	database: "phonebook_db",
-	port: "5432",
-});
+const supabaseUrl = "https://elifcfxzhfuqhyuoynjm.supabase.co";
+const supabaseKey =
+	"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVsaWZjZnh6aGZ1cWh5dW95bmptIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI5MTg2NDUsImV4cCI6MjAyODQ5NDY0NX0.j9cS36JsMLRxjthTpmD5VwSUzNs9YPUe1bMUbIfEprY";
 
-export function query(text, params) {
-	return db.query(text, params);
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+export async function getPhonebook() {
+	return await supabase.rpc("get_phonebook");
 }
 
-export function getPhonebook() {
-	return query("select * from phonebook");
-}
-
-export function getEntriesCount() {
-	return query("select count(name) from phonebook");
+export async function getEntriesCount() {
+	return await supabase.rpc("get_entry_count");
 }
 
 // Contact queries
 
-export function getContact(id) {
-	return query(`select * from phonebook where id = $1`, [id]);
+export async function getContact(id) {
+	return await supabase.rpc("get_entry_by_id", { contactid: id });
 }
 
-export function addContact(contact) {
-	return query(
-		`insert into phonebook(name, number) values($1, $2) returning *`,
-		[contact.name, contact.number]
-	);
+export async function addContact(contact) {
+	return await supabase.rpc("add_contact", { added_contact: contact });
 }
 
-export function editContact(contact) {
-	return query(
-		"update phonebook set name = $1, number = $2 where id = $3 returning *",
-		[contact.name, contact.number, contact.id]
-	);
+export async function editContact(contact) {
+	return await supabase.rpc("edit_contact", { edited_contact: contact });
 }
 
-export function deleteContact(id) {
-	return query(`delete from phonebook where id = ${id}`);
+export async function deleteContact(id) {
+	return await supabase.rpc("delete_contact", { contactid: id})
 }
