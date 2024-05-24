@@ -1,9 +1,9 @@
 import Note from "./components/Note";
-import noteService from "./services/notes";
+import noteService from "./services/notes.service";
 import { useState } from "react";
 import { useEffect } from "react";
-import "./index.css";
 import Notification from "./components/Notification";
+import "./index.css";
 
 const App = () => {
 	const [notes, setNotes] = useState([]);
@@ -18,7 +18,6 @@ const App = () => {
 	}, []);
 
 	const toggleImportanceOf = async (id) => {
-
 		const updatedNote = await notes.find((note) => note.id === id);
 		updatedNote.important = !updatedNote.important;
 

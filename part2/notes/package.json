@@ -10,7 +10,7 @@
         "deploy:full": "pnpm run build:ui && git add . && git commit -m 'uibuild' && git push",
         "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview",
-        "server": "nodemon server.js"
+        "server": "nodemon ./src/server.js"
     },
     "dependencies": {
         "@supabase/supabase-js": "^2.42.4",

@@ -8,7 +8,7 @@ import {
 	getAllNotes,
 	getNoteById,
 	updateNote,
-} from "./db.js";
+} from "./services/db.service.js";
 
 // Create an Express application
 const app = express();
